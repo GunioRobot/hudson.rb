@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + "/spec_helper"
 
 describe Hudson::JobConfigBuilder do
   include ConfigFixtureLoaders
-  
+
   describe "explicit steps to match a ruby job" do
     before do
       @config = Hudson::JobConfigBuilder.new(:rails) do |c|
@@ -18,8 +18,8 @@ describe Hudson::JobConfigBuilder do
       steps.map(&:inner_text).should == ["step 1", "step 2"]
     end
   end
-  
-  
+
+
   describe "rails job; single axis" do
     before do
       @config = Hudson::JobConfigBuilder.new(:rails) do |c|
@@ -30,9 +30,9 @@ describe Hudson::JobConfigBuilder do
       config_xml("rails", "single").should == @config.to_xml
     end
   end
-  
-  
-  
+
+
+
   describe "many rubies" do
     before do
       @config = Hudson::JobConfigBuilder.new(:ruby) do |c|
@@ -43,13 +43,13 @@ describe Hudson::JobConfigBuilder do
     it "have have explicit rubies" do
       config_xml("ruby", "multi").should == @config.to_xml
     end
-    
+
     it "and many labels/assigned_nodes" do
       @config.node_labels = %w[1.8.7 ubuntu]
       config_xml("ruby", "multi-ruby-multi-labels").should == @config.to_xml
     end
   end
-  
+
   describe "assigned slave nodes for slave usage" do
     before do
       @config = Hudson::JobConfigBuilder.new(:rails) do |c|
@@ -62,7 +62,7 @@ describe Hudson::JobConfigBuilder do
       Hpricot.XML(@config.to_xml).search("canRoam").text.should == "false"
     end
   end
-  
+
   describe "no specific slave nodes" do
     before do
       @config = Hudson::JobConfigBuilder.new(:rails) do |c|
@@ -72,7 +72,7 @@ describe Hudson::JobConfigBuilder do
       Hpricot.XML(@config.to_xml).search("assignedNode").size.should == 0
     end
   end
-  
+
   describe "SCM behaviour" do
     describe "#public_scm = true => convert git@ into git:// until we have deploy keys" do
       before do
@@ -85,7 +85,7 @@ describe Hudson::JobConfigBuilder do
         config_xml("rails", "single").should == @config.to_xml
       end
     end
-    
+
     # <branches>
     #   <hudson.plugins.git.BranchSpec>
     #     <name>master</name>

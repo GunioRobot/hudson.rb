@@ -6,7 +6,7 @@ Feature: Create and manage jobs
   Background:
     Given I have a Hudson server running
     And the Hudson server has no current jobs
-  
+
   Scenario: Setup hudson job for git scm (hudson create)
     Given I am in the "ruby" project folder
     And the project uses "git" scm
@@ -21,7 +21,7 @@ Feature: Create and manage jobs
       """
     When I run local executable "hudson" with arguments "list --host localhost --port 3010"
     Then I should see "ruby"
-  
+
   Scenario: Create job via $HUDSON_HOST and $HUDSON_PORT (hudson create)
     Given I am in the "ruby" project folder
     And the project uses "git" scm
@@ -31,7 +31,7 @@ Feature: Create and manage jobs
     Then I should see "http://localhost:3010/job/ruby/build"
     When I run local executable "hudson" with arguments "list"
     Then I should see "ruby"
-  
+
   Scenario: Don't trigger initial job build (hudson create --no-build)
     Given I am in the "ruby" project folder
     And the project uses "git" scm
@@ -137,7 +137,7 @@ Feature: Create and manage jobs
           </hudson.matrix.LabelAxis>
         </axes>
       """
-  
+
   Scenario: Setup hudson job for a specific node label (hudson create --assigned_node)
     Given I am in the "ruby" project folder
     And the project uses "git" scm
@@ -187,21 +187,21 @@ Feature: Create and manage jobs
     When I create a job
     When I run local executable "hudson" with arguments "build"
     Then I should see "Build for 'ruby' running now..."
-  
+
   Scenario: Trigger a job build on invaild project (hudson build)
     Given I am in the "ruby" project folder
     When I run local executable "hudson" with arguments "build . --host localhost --port 3010"
     Then I should see "ERROR: No job 'ruby' on server."
-  
+
   Scenario: Remove a job (hudson remove)
     Given I am in the "ruby" project folder
     When I create a job
     Then I should see "Added ruby project 'ruby' to Hudson."
     When I run local executable "hudson" with arguments "remove ."
     Then I should see "Removed project 'ruby' from Hudson."
-  
+
   Scenario: Remove a job that doesn't exist gives error (hudson remove)
     Given I am in the "ruby" project folder
     When I run local executable "hudson" with arguments "remove . --host localhost --port 3010"
     Then I should see "ERROR: Failed to delete project 'ruby'."
-  
+

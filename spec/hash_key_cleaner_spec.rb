@@ -12,7 +12,7 @@ describe Hash do
       "str-hyp-hen" => "str-hyp-hen"
     }
   end
-  
+
   it do
     subject.with_clean_keys.should == {
       :simple => "simple",

@@ -95,7 +95,7 @@ module Hudson
         end
       end
     end
-    
+
     desc "build [PROJECT_PATH]", "trigger build of this project's build job"
     common_options
     def build(project_path = ".")
@@ -109,7 +109,7 @@ module Hudson
         end
       end
     end
-    
+
     desc "remove PROJECT_PATH", "remove this project's build job from Hudson"
     common_options
     def remove(project_path)
@@ -121,11 +121,11 @@ module Hudson
           shell.say "Removed project '#{name}' from Hudson."
         else
           p "Failed to delete project '#{name}'."
-          error "Failed to delete project '#{name}'." 
+          error "Failed to delete project '#{name}'."
         end
       end
     end
-    
+
     desc "job NAME", "Display job details"
     method_option :hash, :desc => 'Dump as formatted Ruby hash format'
     method_option :json, :desc => 'Dump as JSON format'
@@ -185,7 +185,7 @@ module Hudson
         shell.say node["displayName"], color
       end
     end
-    
+
     desc "add_node SLAVE_HOST", "add a URI (user@host:port) server as a slave node"
     method_option :labels, :desc       => 'Labels for a job --assigned_node to match against to select a slave (comma separated)'
     method_option :"slave-user", :desc => 'SSH user for Hudson to connect to slave node (default: deploy)'
@@ -247,7 +247,7 @@ USEAGE
       shell.say "ERROR: #{text}", :red
       exit
     end
-    
+
     def cmd
       ENV['CUCUMBER_RUNNING'] ? 'hudson' : $0
     end

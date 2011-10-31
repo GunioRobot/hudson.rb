@@ -7,7 +7,7 @@ Feature: Listing jobs
       """
       No connection available to the server.
       """
-  
+
   Scenario: List jobs on a server with no jobs (hudson list)
     Given I have a Hudson server running
     And the Hudson server has no current jobs
@@ -16,7 +16,7 @@ Feature: Listing jobs
       """
       http://localhost:3010: no jobs
       """
-  
+
   Scenario: List jobs on a server with jobs (hudson list)
     Given I have a Hudson server running
     And the Hudson server has no current jobs
@@ -30,5 +30,5 @@ Feature: Listing jobs
       * ruby
 
       """
-  
-  
+
+

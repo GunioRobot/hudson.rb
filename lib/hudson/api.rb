@@ -13,7 +13,7 @@ module Hudson
     headers 'content-type' => 'application/json'
     format :json
     # http_proxy 'localhost', '8888'
-    
+
     JobAlreadyExistsError = Class.new(Exception)
 
     def self.setup_base_url(options)
@@ -66,13 +66,13 @@ module Hudson
         raise JobAlreadyExistsError.new(name)
       end
     end
-    
+
     # Attempts to delete a job +name+
     def self.delete_job(name)
       res = post_plain "/job/#{name.gsub(" ", "%20")}/doDelete"
       res.code.to_i == 302
     end
-    
+
     def self.build_job(name)
       res = get_plain "/job/#{name}/build"
       res.code.to_i == 302
@@ -83,7 +83,7 @@ module Hudson
       cache_base_uri
       json
     end
-    
+
     def self.job_names
       summary["jobs"].map {|job| job["name"]}
     end
@@ -131,7 +131,7 @@ module Hudson
         )
       end
       options    = default_options.merge(options)
-      
+
       slave_host = options[:slave_host]
       name       = options[:name] || slave_host
       labels     = options[:labels].split(/\s*,\s*/).join(' ') if options[:labels]
@@ -187,7 +187,7 @@ module Hudson
         false
       end
     end
-    
+
     def self.delete_node(name)
       post_plain("#{base_uri}/computer/#{CGI::escape(name).gsub('+', '%20')}/doDelete/api/json")
     end
@@ -198,20 +198,20 @@ module Hudson
       uri = URI.parse base_uri
       res = Net::HTTP.start(uri.host, uri.port) { |http| http.post(path, options) }
     end
-    
+
     # Helper for GET that don't barf at Hudson's crappy API responses
     def self.get_plain(path, options = {})
       options = options.with_clean_keys
       uri = URI.parse base_uri
       res = Net::HTTP.start(uri.host, uri.port) { |http| http.get(path, options) }
     end
-    
+
     private
     def self.cache_base_uri
       Hudson::Config.config["base_uri"] = base_uri
       Hudson::Config.store!
     end
-    
+
     def self.job_url(name)
       "#{base_uri}/job/#{name}"
     end

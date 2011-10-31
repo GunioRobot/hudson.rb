@@ -40,7 +40,7 @@ module Hudson
       FileUtils.mkdir_p @serverhome
       hudson_stock ? upgrade_from_fixture_stock : upgrade_from_network_stock
     end
-    
+
     def hudson_stock
       ENV['HUDSON_STOCK']
     end
@@ -50,7 +50,7 @@ module Hudson
     def warfile?
       File.exists?(@warfile) && system("unzip -l #{@warfile} > /dev/null 2>/dev/null")
     end
-    
+
     def upgrade_from_fixture_stock
       FileUtils.cp File.join(hudson_stock, "hudson.war"), @warfile
       FileUtils.cp_r File.join(hudson_stock, "plugins"), @serverhome
@@ -73,7 +73,7 @@ module Hudson
           step.ok("Up-to-date at #{current_server_version}")
         end
       end
-      
+
       plugins_dir = File.join(@serverhome, 'plugins')
       plugins = if File.exists?(plugins_dir)
         Dir.chdir(plugins_dir) do
@@ -95,7 +95,7 @@ module Hudson
     def current_server_version
       File.exists?(@versionfile) ? File.read(@versionfile) : "0"
     end
-    
+
     def current_server_version=(version)
       File.open(@versionfile, "w") do |f|
         f.write(version)
@@ -128,7 +128,7 @@ module Hudson
       def ok(msg = nil)
         raise Ok.new(msg)
       end
-      
+
       class Ok < StandardError
       end
     end
